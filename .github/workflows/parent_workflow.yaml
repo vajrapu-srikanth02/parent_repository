@@ -1,1 +1,42 @@
+name: Trigger Child Workflows
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger-child-1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Child 1 Workflow
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          repository: owner/child-repo-1
+          event-type: trigger-workflow
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  trigger-child-2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Child 2 Workflow
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          repository: owner/child-repo-2
+          event-type: trigger-workflow
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  wait-for-child-status:
+    needs: [trigger-child-1, trigger-child-2]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Status of Child 1 Workflow
+        run: |
+          child_1_run=$(gh api repos/owner/child-repo-1/actions/runs --jq '.workflow_runs[0].status')
+          echo "Child 1 Status: $child_1_run"
+      
+      - name: Check Status of Child 2 Workflow
+        run: |
+          child_2_run=$(gh api repos/owner/child-repo-2/actions/runs --jq '.workflow_runs[0].status')
+          echo "Child 2 Status: $child_2_run"
 
