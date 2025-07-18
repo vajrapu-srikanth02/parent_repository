@@ -32,11 +32,11 @@ jobs:
     steps:
       - name: Check Status of Child 1 Workflow
         run: |
-          child_1_run=$(gh api repos/owner/child-repo-1/actions/runs --jq '.workflow_runs[0].status')
+          child_1_run=$(gh api repos/${{ github.repository_owner }}/child_repository_1/actions/runs --jq '.workflow_runs[0].status')
           echo "Child 1 Status: $child_1_run"
       
       - name: Check Status of Child 2 Workflow
         run: |
-          child_2_run=$(gh api repos/owner/child-repo-2/actions/runs --jq '.workflow_runs[0].status')
+          child_2_run=$(gh api repos/${{ github.repository_owner }}/child_repository_2/actions/runs --jq '.workflow_runs[0].status')
           echo "Child 2 Status: $child_2_run"
 
