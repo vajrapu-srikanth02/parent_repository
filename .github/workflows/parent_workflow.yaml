@@ -12,7 +12,7 @@ jobs:
       - name: Trigger Child 1 Workflow
         uses: peter-evans/repository-dispatch@v1
         with:
-          repository: owner/child-repo-1
+          repository: ${{ github.repository_owner }}/child-repo-1
           event-type: trigger-workflow
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -22,7 +22,7 @@ jobs:
       - name: Trigger Child 2 Workflow
         uses: peter-evans/repository-dispatch@v1
         with:
-          repository: owner/child-repo-2
+          repository: ${{ github.repository_owner }}/child-repo-2
           event-type: trigger-workflow
           token: ${{ secrets.GITHUB_TOKEN }}
 
