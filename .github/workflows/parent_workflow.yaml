@@ -14,7 +14,7 @@ jobs:
         with:
           repository: ${{ github.repository_owner }}/child_repository_1
           event-type: trigger-workflow
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
 
   trigger-child-2:
     runs-on: ubuntu-latest
@@ -24,7 +24,7 @@ jobs:
         with:
           repository: ${{ github.repository_owner }}/child_repository_2
           event-type: trigger-workflow
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
 
   wait-for-child-status:
     needs: [trigger-child-1, trigger-child-2]
