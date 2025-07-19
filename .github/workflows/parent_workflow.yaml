@@ -12,6 +12,6 @@ jobs:
       - name: Trigger Child 1 Workflow
         uses: peter-evans/repository-dispatch@v3
         with:
-          repository: ${{ github.repository_owner }}/child_repository_1
+          repository: vajrapu-srikanth02/child_repository_1
           event-type: trigger-workflow
           token: ${{ secrets.GH_TOKEN }}
