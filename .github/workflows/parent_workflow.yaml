@@ -10,42 +10,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Child 1 Workflow
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v3
         with:
           repository: ${{ github.repository_owner }}/child_repository_1
           event-type: trigger-workflow
           token: ${{ secrets.GH_TOKEN }}
 
-  trigger-child-2:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger Child 2 Workflow
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          repository: ${{ github.repository_owner }}/child_repository_2
-          event-type: trigger-workflow
-          token: ${{ secrets.GH_TOKEN }}
+  # wait-for-child-status:
+  #   needs: [trigger-child-1]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Set up GitHub CLI
+  #       run: |
+  #         curl -sSL https://github.com/cli/cli/releases/download/v2.21.0/gh_2.21.0_linux_amd64.tar.gz | tar -xvz
+  #         sudo mv gh_2.21.0_linux_amd64/bin/gh /usr/local/bin/gh
 
-  wait-for-child-status:
-    needs: [trigger-child-1, trigger-child-2]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up GitHub CLI
-        run: |
-          curl -sSL https://github.com/cli/cli/releases/download/v2.21.0/gh_2.21.0_linux_amd64.tar.gz | tar -xvz
-          sudo mv gh_2.21.0_linux_amd64/bin/gh /usr/local/bin/gh
-
-      - name: Authenticate with GitHub CLI
-        run: |
-          echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
+  #     - name: Authenticate with GitHub CLI
+  #       run: |
+  #         echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
     
-      - name: Check Status of Child 1 Workflow
-        run: |
-          child_1_run=$(gh api repos/${{ github.repository_owner }}/child_repository_1/actions/runs --jq '.workflow_runs[0].status')
-          echo "Child 1 Status: $child_1_run"
-      
-      - name: Check Status of Child 2 Workflow
-        run: |
-          child_2_run=$(gh api repos/${{ github.repository_owner }}/child_repository_2/actions/runs --jq '.workflow_runs[0].status')
-          echo "Child 2 Status: $child_2_run"
-
+  #     - name: Check Status of Child 1 Workflow
+  #       run: |
+  #         child_1_run=$(gh api repos/${{ github.repository_owner }}/child_repository_1/actions/runs --jq '.workflow_runs[0].status')
+  #         echo "Child 1 Status: $child_1_run"
