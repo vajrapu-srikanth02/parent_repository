@@ -15,7 +15,7 @@ jobs:
           repository: ${{ github.repository_owner }}/child_repository_1
           event-type: trigger-workflow
           token: ${{ secrets.GH_TOKEN }}
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+          client-payload: '{"extra": "data"}'
 
   # wait-for-child-status:
   #   needs: [trigger-child-1]
