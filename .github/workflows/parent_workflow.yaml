@@ -1,6 +1,7 @@
 name: Trigger Child Workflows
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
