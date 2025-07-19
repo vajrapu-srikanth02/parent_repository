@@ -15,25 +15,3 @@ jobs:
           repository: ${{ github.repository_owner }}/child_repository_1
           event-type: trigger-workflow
           token: ${{ secrets.GH_TOKEN }}
-          client-payload: '{"github": ${{ toJson(github) }}}'
-
-  # wait-for-child-status:
-  #   needs: [trigger-child-1]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  # #     - name: Set up GitHub CLI
-  # #       run: |
-  # #         curl -sSL https://github.com/cli/cli/releases/download/v2.21.0/gh_2.21.0_linux_amd64.tar.gz | tar -xvz
-  # #         sudo mv gh_2.21.0_linux_amd64/bin/gh /usr/local/bin/gh
-
-  # #     - name: Authenticate with GitHub CLI
-  # #       run: |
-  # #         echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
-    
-  #     - name: Check Status of Child 1 Workflow
-  #       run: |
-  #         curl -L \
-  #           -H "Accept: application/vnd.github+json" \
-  #           -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
-  #           -H "X-GitHub-Api-Version: 2022-11-28" \
-  #           https://api.github.com/repos/${{ github.repository_owner }}/child_repository_1/actions/runs
