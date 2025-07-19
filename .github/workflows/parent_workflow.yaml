@@ -14,4 +14,4 @@ jobs:
         with:
           repository: vajrapu-srikanth02/child_repository_1
           event-type: trigger-workflow
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.GH_PATS }}
